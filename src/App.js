@@ -1,3 +1,4 @@
+import React from 'react';
 import Expenses from './components/Expenses';
 import logo from './logo.svg';
 import './App.css';
@@ -25,28 +26,21 @@ function App() {
     },
   ];
 
-  return (
-    <div>
-      <h2>Let's get started</h2>
-      <Expenses items={expenses} />
-    </div>
-    // <div className="App">
-    //   <header className="App-header">
-    //     <img src={logo} className="App-logo" alt="logo" />
-    //     <p>
-    //       Edit <code>src/App.js</code> and save to reload.
-    //     </p>
-    //     <a
-    //       className="App-link"
-    //       href="https://reactjs.org"
-    //       target="_blank"
-    //       rel="noopener noreferrer"
-    //     >
-    //       Learn React
-    //     </a>
-    //   </header>
-    // </div>
+  //The same as below
+  //under the hook react jsx transform  like that
+  return React.createElement(
+    'div',
+    {},
+    React.createElement('h2', {}, "Let's get started"),
+    React.createElement(Expenses, { items: expenses })
   );
+  //The same as above
+  // return (
+  //   <div>
+  //     <h2>Let's get started</h2>
+  //     <Expenses items={expenses} />
+  //   </div>
+  // );
 }
 
 export default App;
