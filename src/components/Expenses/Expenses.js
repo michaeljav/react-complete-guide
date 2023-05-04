@@ -1,7 +1,7 @@
 import ExpenseItem from './ExpenseItem';
 import Card from '../UI/Card'; //TO GO UP ONE LEVEL WITH TWO DOTS
 import './Expenses.css';
-function Expenses(props) {
+const Expenses = (props) => {
   return (
     <Card className='expenses'>
       <ExpenseItem
@@ -26,6 +26,6 @@ function Expenses(props) {
       ></ExpenseItem>
     </Card>
   );
-}
+};
 
 export default Expenses;

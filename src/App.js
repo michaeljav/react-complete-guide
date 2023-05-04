@@ -1,9 +1,9 @@
 import React from 'react';
-import Expenses from './components/Expenses';
+import Expenses from './components/Expenses/Expenses';
 import logo from './logo.svg';
 import './App.css';
 
-function App() {
+const App = () => {
   const expenses = [
     {
       id: 'e1',
@@ -26,21 +26,12 @@ function App() {
     },
   ];
 
-  //The same as below
-  //under the hook react jsx transform  like that
-  return React.createElement(
-    'div',
-    {},
-    React.createElement('h2', {}, "Let's get started"),
-    React.createElement(Expenses, { items: expenses })
+  return (
+    <div>
+      <h2>Let's get started</h2>
+      <Expenses items={expenses} />
+    </div>
   );
-  //The same as above
-  // return (
-  //   <div>
-  //     <h2>Let's get started</h2>
-  //     <Expenses items={expenses} />
-  //   </div>
-  // );
-}
+};
 
 export default App;
