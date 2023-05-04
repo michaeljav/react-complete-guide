@@ -3,8 +3,10 @@ import Card from '../UI/Card';
 import './ExpenseItem.css';
 
 const ExpenseItem = (props) => {
+  let title = props.title;
+
   const clickHandler = () => {
-    console.log('first');
+    title = 'Updated!';
   };
 
   return (
