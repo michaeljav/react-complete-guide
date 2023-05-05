@@ -13,25 +13,43 @@ const ExpenseForm = () => {
   });
 
   const titleChangeHandler = (event) => {
+    //Option1
     //setEnteredTitle(event.target.value);
-    setUserInput({
-      ...userInput /*It should be first*/,
-      enteredTitle: event.target.value /** Override enteredTitle */,
+    //Option 2 Not recommened : because  react no actualiza inmediatamente las variable y puedo tener inconsitencia en la data.
+    // setUserInput({
+    //   ...userInput /*It should be first*/,
+    //   enteredTitle: event.target.value /** Override enteredTitle */,
+    // });
+    //Option 3  CORRECT APPROACH
+    setUserInput((prevState) => {
+      return { ...prevState, enteredTitle: event.target.value };
     });
   };
 
   const amountChangeHandler = (event) => {
     //setEnteredAmount(event.target.value);
-    setUserInput({
-      ...userInput /*It should be first*/,
-      enteredAmount: event.target.value /** Override enteredAmount */,
+
+    // setUserInput({
+    //   ...userInput /*It should be first*/,
+    //   enteredAmount: event.target.value /** Override enteredAmount */,
+    // });
+
+    //Option 3  CORRECT APPROACH
+    setUserInput((prevState) => {
+      return { ...prevState, enteredAmount: event.target.value };
     });
   };
   const dateChangeHandler = (event) => {
     //setEnteredDate(event.target.value);
-    setUserInput({
-      ...userInput /*It should be first*/,
-      enteredDate: event.target.value /** Override enteredDate */,
+
+    // setUserInput({
+    //   ...userInput /*It should be first*/,
+    //   enteredDate: event.target.value /** Override enteredDate */,
+    // });
+
+    //Option 3  CORRECT APPROACH
+    setUserInput((prevState) => {
+      return { ...prevState, enteredDate: event.target.value };
     });
   };
 
