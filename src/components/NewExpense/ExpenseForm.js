@@ -2,32 +2,33 @@ import React, { useState } from 'react';
 
 import './ExpenseForm.css';
 const ExpenseForm = () => {
-  // const [enteredTitle, setEnteredTitle] = useState('');
-  // const [enteredAmount, setEnteredAmount] = useState('');
-  // const [enteredDate, setEnteredDate] = useState('');
+  const [enteredTitle, setEnteredTitle] = useState('');
+  const [enteredAmount, setEnteredAmount] = useState('');
+  const [enteredDate, setEnteredDate] = useState('');
 
-  const [userInput, setUserInput] = useState({
-    enteredTitle: '',
-    enteredAmount: '',
-    enteredDate: '',
-  });
+  // const [userInput, setUserInput] = useState({
+  //   enteredTitle: '',
+  //   enteredAmount: '',
+  //   enteredDate: '',
+  // });
 
   const titleChangeHandler = (event) => {
     //Option1
-    //setEnteredTitle(event.target.value);
+    setEnteredTitle(event.target.value);
     //Option 2 Not recommened : because  react no actualiza inmediatamente las variable y puedo tener inconsitencia en la data.
     // setUserInput({
     //   ...userInput /*It should be first*/,
     //   enteredTitle: event.target.value /** Override enteredTitle */,
     // });
     //Option 3  CORRECT APPROACH
-    setUserInput((prevState) => {
-      return { ...prevState, enteredTitle: event.target.value };
-    });
+    // setUserInput((prevState) => {
+    //   console.log({ ...prevState, enteredTitle: event.target.value });
+    //   return { ...prevState, enteredTitle: event.target.value };
+    // });
   };
 
   const amountChangeHandler = (event) => {
-    //setEnteredAmount(event.target.value);
+    setEnteredAmount(event.target.value);
 
     // setUserInput({
     //   ...userInput /*It should be first*/,
@@ -35,12 +36,13 @@ const ExpenseForm = () => {
     // });
 
     //Option 3  CORRECT APPROACH
-    setUserInput((prevState) => {
-      return { ...prevState, enteredAmount: event.target.value };
-    });
+    // setUserInput((prevState) => {
+    //   return { ...prevState, enteredAmount: event.target.value };
+    // });
   };
   const dateChangeHandler = (event) => {
-    //setEnteredDate(event.target.value);
+    console.log(event.target.value);
+    setEnteredDate(event.target.value);
 
     // setUserInput({
     //   ...userInput /*It should be first*/,
@@ -48,16 +50,28 @@ const ExpenseForm = () => {
     // });
 
     //Option 3  CORRECT APPROACH
-    setUserInput((prevState) => {
-      return { ...prevState, enteredDate: event.target.value };
-    });
+    // setUserInput((prevState) => {
+    //   return { ...prevState, enteredDate: event.target.value };
+    // });
+  };
+
+  const submitHandler = (event) => {
+    event.preventDefault(); //prevent send data and reload page
+    console.log(enteredDate);
+    const expenseData = {
+      title: enteredTitle,
+      amount: enteredAmount,
+      date: new Date(enteredDate),
+      /*date: enteredDate,*/
+    };
+    console.log(expenseData);
   };
 
   return (
-    <form>
+    <form onSubmit={submitHandler}>
       <div className='new-expense__controls'>
         <div className='new-expense__control'>
-          <label>Title</label>
+          <label>Title = {enteredTitle}</label>
           <input type='text' onChange={titleChangeHandler} />
         </div>
         <div className='new-expense__control'>
