@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import ExpenseItem from './ExpenseItem';
+import ExpensesList from './ExpensesList';
 import Card from '../UI/Card'; //TO GO UP ONE LEVEL WITH TWO DOTS
 import './Expenses.css';
 import ExpensesFilter from './ExpensesFilter';
@@ -24,17 +24,6 @@ const Expenses = (props) => {
   // console.log('new added');
   // console.log(props.items);
 
-  let expensesContent = <p>No expenses found.</p>;
-  if (itemsFiltered.length > 0) {
-    expensesContent = itemsFiltered.map((expense) => (
-      <ExpenseItem
-        key={expense.id}
-        title={expense.title}
-        amount={expense.amount}
-        date={expense.date}
-      />
-    ));
-  }
   return (
     <div>
       <Card className='expenses'>
@@ -42,7 +31,7 @@ const Expenses = (props) => {
           selected={filteredYear}
           onChangeFilter={filterChangeHandler}
         />
-        {expensesContent}
+        <ExpensesList items={itemsFiltered} />
       </Card>
     </div>
   );
