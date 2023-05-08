@@ -4,6 +4,7 @@ import ExpenseItem from './ExpenseItem';
 import Card from '../UI/Card'; //TO GO UP ONE LEVEL WITH TWO DOTS
 import './Expenses.css';
 import ExpensesFilter from './ExpensesFilter';
+
 const Expenses = (props) => {
   const [filteredYear, setFilteredYear] = useState('2020');
 
@@ -14,8 +15,14 @@ const Expenses = (props) => {
     setFilteredYear(selectedYear);
   };
 
-  console.log('new added');
-  console.log(props.items);
+  const itemsFiltered = props.items.filter((word) => {
+    // console.log('Inside filter');
+    // console.log(word.date.getFullYear());
+    return word.date.getFullYear().toString() === filteredYear;
+  });
+
+  // console.log('new added');
+  // console.log(props.items);
   return (
     <div>
       <Card className='expenses'>
@@ -24,7 +31,8 @@ const Expenses = (props) => {
           onChangeFilter={filterChangeHandler}
         />
 
-        {props.items.map((expense) => (
+        {/* {props.items.map((expense) => ( */}
+        {itemsFiltered.map((expense) => (
           <ExpenseItem
             key={expense.id}
             title={expense.title}
