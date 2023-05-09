@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 
 import ExpensesList from './ExpensesList';
+
 import Card from '../UI/Card'; //TO GO UP ONE LEVEL WITH TWO DOTS
+import ExpensesChart from './ExpensesChart';
 import './Expenses.css';
 import ExpensesFilter from './ExpensesFilter';
 
@@ -31,6 +33,7 @@ const Expenses = (props) => {
           selected={filteredYear}
           onChangeFilter={filterChangeHandler}
         />
+        <ExpensesChart expenses={itemsFiltered} />
         <ExpensesList items={itemsFiltered} />
       </Card>
     </div>
