@@ -6,11 +6,9 @@ const AddUser = (props) => {
   };
 
   return (
-    //on option1
+    //on option1      //cssClass is a property
     // <Card cssClass={classes.input}>
     <Card className={classes.input}>
-      {' '}
-      //cssClass is a property
       <form onSubmit={addUserHandler}>
         <label htmlFor='username'>UserName</label>
         <input id='username' type='text' />
