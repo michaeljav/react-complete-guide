@@ -14,7 +14,7 @@ const App = () => {
     setCourseGoals((prevGoals) => {
       const updatedGoals = [...prevGoals];
       updatedGoals.unshift({ text: enteredText, id: Math.random().toString() });
-      //testinog
+      //testinog  Added react devtools to see components
       return updatedGoals;
     });
   };
