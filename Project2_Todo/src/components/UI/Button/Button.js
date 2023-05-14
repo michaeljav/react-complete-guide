@@ -19,6 +19,7 @@ const Button = styled.button`
 
   @media (min-width: 768px) {
     width: auto;
+    color: white;
   }
 
   &:focus {
