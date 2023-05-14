@@ -36,12 +36,12 @@ const App = () => {
   }
 
   return (
-    // <React.Fragment>
+    <React.Fragment>
       <section id='goal-form'>
         <CourseInput onAddGoal={addGoalHandler} />
       </section>
       <section id='goals'>{content}</section>
-    // </React.Fragment>
+    </React.Fragment>
   );
 };
 
