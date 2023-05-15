@@ -18,6 +18,9 @@ const AddUser = (props) => {
       return;
     }
     console.log(enteredUserName, enteredAge);
+    //!!IMPORTANT HOW to lifting the state to app component and then it being used inside of usersList component
+    props.onAddUser(enteredUserName, enteredAge);
+
     setEnteredUserName('');
     setEnteredAge('');
   };
