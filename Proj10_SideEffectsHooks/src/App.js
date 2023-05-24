@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Login from './components/Login/Login';
 import Home from './components/Home/Home';
@@ -7,11 +7,18 @@ import MainHeader from './components/MainHeader/MainHeader';
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const storedUserLoggedInInformation = localStorage.getItem('isLoggedIn');
+  //corre la primera vez
+  //pero como en el segundo parametro tiene un array vacio y no tiene
+  //ninguna variable que haya cambiado, esta funcion hook useEffect correras
+  //solo la primera vez.
+  useEffect(() => {
+    const storedUserLoggedInInformation = localStorage.getItem('isLoggedIn');
 
-  if (storedUserLoggedInInformation === '1') {
-    setIsLoggedIn(true);
-  }
+    if (storedUserLoggedInInformation === '1') {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
   const loginHandler = (email, password) => {
     // We should of course check email and password
     // But it's just a dummy/ demo anyways
@@ -20,6 +27,7 @@ function App() {
   };
 
   const logoutHandler = () => {
+    localStorage.removeItem('isLoggedIn');
     setIsLoggedIn(false);
   };
 
