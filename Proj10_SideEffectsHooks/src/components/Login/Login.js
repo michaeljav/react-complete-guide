@@ -13,11 +13,24 @@ const Login = (props) => {
 
   //cuando cambia email o  password este funcion se ejecuta
   useEffect(() => {
-    console.log('cambio uno de los dos ');
-    console.log(enteredEmail, enteredPassword);
-    setFormIsValid(
-      enteredEmail.includes('@') && enteredPassword.trim().length > 6
-    );
+    console.log('Ejecuto USEEFFECT ');
+    const identifierTimer = setTimeout(() => {
+      // console.clear();
+      console.log('Ejecuto setTimeout');
+      console.log(enteredEmail, enteredPassword);
+      setFormIsValid(
+        enteredEmail.includes('@') && enteredPassword.trim().length > 6
+      );
+    }, 500);
+
+    //Esta funcion se ejecuta antes de  volver a ejecutar la
+    //proxima vez useEffect. Me ayuda a borrar el anterior
+    //setTimeout que que habia creado y me permite
+    //solo cojer el ultimo ejecutar el ultimo settimeout  y  valor del inpu ya que solo se ejecuta una vez, porque los ateriores los borre con clearTimeout funcion.
+    return () => {
+      console.log('CLEANUP');
+      clearTimeout(identifierTimer);
+    };
   }, [enteredEmail, enteredPassword]);
 
   const emailChangeHandler = (event) => {
