@@ -11,6 +11,31 @@ const Login = (props) => {
   const [passwordIsValid, setPasswordIsValid] = useState();
   const [formIsValid, setFormIsValid] = useState(false);
 
+  //option 1: corre cada vez que se renderiza el componente
+  // useEffect(() => {
+  //   console.log('EFFECT RUNNING');
+  // });
+
+  //option 2: corre Solo la primera vez que se monta el componente, porque al inicio en el segundo parametro tiene un undefined y luego se asigna el array vacio pero espues de eso cuando se renderiza nuevamente ya tiene un array vacio y eso quiere decir que no cambia ese valor. por eso solo corre una vez.
+  // useEffect(() => {
+  //   console.log('EFFECT RUNNING one time');
+  // }, []);
+
+  //option 3: correra la primera vez y cada vez que una variable de las que esta en el segundo parametro cambie. en este caso  cada vez que cambie la variable  password
+  // useEffect(() => {
+  //   console.log('EFFECT RUNNING one time and every time that password changes');
+
+  // }, [enteredPassword]);
+
+  //option 4: correra la primera vez y cada vez que una variable de las que esta en el segundo parametro cambie. en este caso  cada vez que cambie la variable  password y limpia useeffect anterior corriendo la funcion de return
+  useEffect(() => {
+    console.log('EFFECT RUNNING one time and every time that password changes');
+
+    return () => {
+      console.log('EFFECT CLEANUP PASSWORD CHANGE');
+    };
+  }, []);
+
   //cuando cambia email o  password este funcion se ejecuta
   useEffect(() => {
     console.log('Ejecuto USEEFFECT ');
