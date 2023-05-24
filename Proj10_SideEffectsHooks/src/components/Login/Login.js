@@ -1,76 +1,75 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
 
 import Card from '../UI/Card/Card';
 import classes from './Login.module.css';
 import Button from '../UI/Button/Button';
 
+const emailReducer = (state, action) => {
+  console.log('Executing from Email reducer> ', action.val);
+  if (action.type === 'USER_INPUT') {
+    return { value: action.val, isValid: action.val.includes('@') };
+  }
+  if (action.type === 'INPUT_BLUR') {
+    //EL ULTIMO ESTADO REACT LO TIENE EN LA VARIABLE STATE
+    return { value: state.value, isValid: state.value.includes('@') };
+  }
+
+  return { value: '', isValid: false };
+};
+
 const Login = (props) => {
-  const [enteredEmail, setEnteredEmail] = useState('');
-  const [emailIsValid, setEmailIsValid] = useState();
+  // const [enteredEmail, setEnteredEmail] = useState('');
+  // const [emailIsValid, setEmailIsValid] = useState();
   const [enteredPassword, setEnteredPassword] = useState('');
   const [passwordIsValid, setPasswordIsValid] = useState();
   const [formIsValid, setFormIsValid] = useState(false);
 
-  //option 1: corre cada vez que se renderiza el componente
+  //funcion a ejecutar,inical state,
+  const [emailState, dispatchEmail] = useReducer(emailReducer, {
+    value: '',
+    isValid: null,
+  });
+
+  // //cuando cambia email o  password este funcion se ejecuta
   // useEffect(() => {
-  //   console.log('EFFECT RUNNING');
-  // });
+  //   console.log('Ejecuto USEEFFECT ');
+  //   const identifierTimer = setTimeout(() => {
+  //     // console.clear();
+  //     console.log('Ejecuto setTimeout');
+  //     console.log(enteredEmail, enteredPassword);
+  //     setFormIsValid(
+  //       enteredEmail.includes('@') && enteredPassword.trim().length > 6
+  //     );
+  //   }, 500);
 
-  //option 2: corre Solo la primera vez que se monta el componente, porque al inicio en el segundo parametro tiene un undefined y luego se asigna el array vacio pero espues de eso cuando se renderiza nuevamente ya tiene un array vacio y eso quiere decir que no cambia ese valor. por eso solo corre una vez.
-  // useEffect(() => {
-  //   console.log('EFFECT RUNNING one time');
-  // }, []);
-
-  //option 3: correra la primera vez y cada vez que una variable de las que esta en el segundo parametro cambie. en este caso  cada vez que cambie la variable  password
-  // useEffect(() => {
-  //   console.log('EFFECT RUNNING one time and every time that password changes');
-
-  // }, [enteredPassword]);
-
-  //option 4: correra la primera vez y cada vez que una variable de las que esta en el segundo parametro cambie. en este caso  cada vez que cambie la variable  password y limpia useeffect anterior corriendo la funcion de return
-  useEffect(() => {
-    console.log('EFFECT RUNNING one time and every time that password changes');
-
-    return () => {
-      console.log('EFFECT CLEANUP PASSWORD CHANGE');
-    };
-  }, []);
-
-  //cuando cambia email o  password este funcion se ejecuta
-  useEffect(() => {
-    console.log('Ejecuto USEEFFECT ');
-    const identifierTimer = setTimeout(() => {
-      // console.clear();
-      console.log('Ejecuto setTimeout');
-      console.log(enteredEmail, enteredPassword);
-      setFormIsValid(
-        enteredEmail.includes('@') && enteredPassword.trim().length > 6
-      );
-    }, 500);
-
-    //Esta funcion se ejecuta antes de  volver a ejecutar la
-    //proxima vez useEffect. Me ayuda a borrar el anterior
-    //setTimeout que que habia creado y me permite
-    //solo cojer el ultimo ejecutar el ultimo settimeout  y  valor del inpu ya que solo se ejecuta una vez, porque los ateriores los borre con clearTimeout funcion.
-    return () => {
-      console.log('CLEANUP');
-      clearTimeout(identifierTimer);
-    };
-  }, [enteredEmail, enteredPassword]);
+  //   //Esta funcion se ejecuta antes de  volver a ejecutar la
+  //   //proxima vez useEffect. Me ayuda a borrar el anterior
+  //   //setTimeout que que habia creado y me permite
+  //   //solo cojer el ultimo ejecutar el ultimo settimeout  y  valor del inpu ya que solo se ejecuta una vez, porque los ateriores los borre con clearTimeout funcion.
+  //   return () => {
+  //     console.log('CLEANUP');
+  //     clearTimeout(identifierTimer);
+  //   };
+  // }, [enteredEmail, enteredPassword]);
 
   const emailChangeHandler = (event) => {
-    setEnteredEmail(event.target.value);
+    // setEnteredEmail(event.target.value);
+    dispatchEmail({ type: 'USER_INPUT', val: event.target.value });
+    setFormIsValid(
+      event.target.value.includes('@') && enteredPassword.trim().length > 6
+    );
   };
 
   const passwordChangeHandler = (event) => {
     setEnteredPassword(event.target.value);
-    setFormIsValid(
-      event.target.value.trim().length > 6 && enteredEmail.includes('@')
-    );
+    setFormIsValid(emailState.isValid && event.target.value.trim().length > 6);
   };
 
   const validateEmailHandler = () => {
-    setEmailIsValid(enteredEmail.includes('@'));
+    //useState Normal
+    // setEmailIsValid(emailState.isValid);
+    //useReducer
+    dispatchEmail({ type: 'INPUT_BLUR' });
   };
 
   const validatePasswordHandler = () => {
@@ -79,7 +78,7 @@ const Login = (props) => {
 
   const submitHandler = (event) => {
     event.preventDefault();
-    props.onLogin(enteredEmail, enteredPassword);
+    props.onLogin(emailState.value, enteredPassword);
   };
 
   return (
@@ -87,14 +86,14 @@ const Login = (props) => {
       <form onSubmit={submitHandler}>
         <div
           className={`${classes.control} ${
-            emailIsValid === false ? classes.invalid : ''
+            emailState.isValid === false ? classes.invalid : ''
           }`}
         >
           <label htmlFor='email'>E-Mail</label>
           <input
             type='email'
             id='email'
-            value={enteredEmail}
+            value={emailState.value}
             onChange={emailChangeHandler}
             onBlur={validateEmailHandler}
           />
