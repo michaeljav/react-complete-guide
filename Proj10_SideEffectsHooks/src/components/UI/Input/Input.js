@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useRef } from 'react';
 
 import classes from './Input.module.css';
 
 const Input = (props) => {
+  const inputRef = useRef();
   return (
     <div
       className={`${classes.control} ${
