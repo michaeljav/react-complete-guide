@@ -1,8 +1,28 @@
-import React from 'react';
+import React, { useRef, useImperativeHandle, useEffect } from 'react';
 
 import classes from './Input.module.css';
 
-const Input = (props) => {
+const Input = React.forwardRef((props, ref) => {
+  const inputRef = useRef();
+
+  // useEffect(() => {
+  //   if (props.id === 'email') {
+  //     inputRef.current.focus();
+  //   }
+  // }, []);
+
+  const activate = () => {
+    inputRef.current.focus();
+  };
+
+  /*aqui  la variable que se podra llamar desde afuera del componente con 
+  ref   que apunta  a la variable interna como por ejemplo activate */
+  useImperativeHandle(ref, () => {
+    return {
+      focus: activate,
+    };
+  });
+
   return (
     <div
       className={`${classes.control} ${
@@ -11,6 +31,7 @@ const Input = (props) => {
     >
       <label htmlFor={props.id}>{props.label}</label>
       <input
+        ref={inputRef}
         type={props.type}
         id={props.id}
         value={props.value}
@@ -19,6 +40,6 @@ const Input = (props) => {
       />
     </div>
   );
-};
+});
 
 export default Input;
